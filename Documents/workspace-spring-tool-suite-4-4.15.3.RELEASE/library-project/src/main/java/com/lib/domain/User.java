@@ -73,10 +73,10 @@ public class User {
 	@Column(name = "phoneNumber", length = 20, nullable = false, unique = true)
 	private String phoneNumber;
 	
-	
+	/*
 	@OneToMany(mappedBy = "user", orphanRemoval = true)
 	private List<Book> books = new ArrayList<>();
-	
+	*/
 	//////////////////////  3. tablo ///////////////////////
 	
 	@JoinTable(name="tbl_user_role",joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name="role_id"))

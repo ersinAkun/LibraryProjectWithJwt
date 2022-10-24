@@ -53,11 +53,28 @@ public class Book {
 	@Column (name="category",length=50,nullable=false)
 	private String category;
 
+	//kitap durumu 
+	@Column (name="status",length=10,nullable=false)
+	private String status;
 	
+	//alinmaTarihi
+	@Column (name="date",length=10,nullable=false)
+	//24.10.2022
+	private String date;
+	
+	//alan kisi maili
+	@Column (name="owner",length=25,nullable=false)	
+	private String owner;
+	
+	
+	
+	
+	
+	/*
 	@ManyToOne
 	@JoinColumn(name= "user_id")
 	private User user;
-	
+	*/
 	
 	
 }

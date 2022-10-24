@@ -4,10 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lib.controller.dto.AddBookRequestDTO;
 import com.lib.controller.dto.RegisterRequest;
 import com.lib.controller.dto.UpdateRequestDTO;
 import com.lib.domain.Role;
@@ -93,5 +96,12 @@ public class UserService {
 	    userRepository.save(user);
 
 	    }
+
+
+
+
+
+
+	
 	
 }

@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lib.controller.dto.AddBookRequestDTO;
 import com.lib.controller.dto.RegisterRequest;
 import com.lib.controller.dto.UpdateRequestDTO;
+import com.lib.domain.Book;
 import com.lib.domain.User;
 import com.lib.security.JwtUtils;
+import com.lib.service.BookService;
 import com.lib.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +46,9 @@ public class UserJWTController {
 	
 	@Autowired
 	JwtUtils jwtUtils;
+	
+	@Autowired
+	BookService bookService;
 	
 	
 	
@@ -86,9 +92,9 @@ public class UserJWTController {
 	    }
 		
 		//********* DELETE USER  ************
-		@DeleteMapping("/delete/{id}")
+		@DeleteMapping("/deleteUser/{id}")
 		@PreAuthorize("hasRole('ROLE_ADMIN')")  ////sadece admin olan kişi silebilir
-	    public ResponseEntity<Map<String,String>> deleteStudent(@PathVariable("id") Long id) {
+	    public ResponseEntity<Map<String,String>> deleteUser(@PathVariable("id") Long id) {
 	        userService.deleteUser(id);
 	        Map<String,String> map = new HashMap<>();
 	        map.put("message", "User is deleted successfuly");
@@ -98,7 +104,7 @@ public class UserJWTController {
 	    }
 		
 		//********  UPDATE  *************
-		@PutMapping("/update/{id}")//.../students/1
+		@PutMapping("/update/{id}")
 		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	    public ResponseEntity<Map<String, String>> updateUser( @PathVariable Long id, @RequestBody UpdateRequestDTO updateRequestDTO){
 
@@ -109,11 +115,52 @@ public class UserJWTController {
 	        return new ResponseEntity<>(map,HttpStatus.OK);
 	    }
 		
+		//*********  KITAP EKLEME  **********
+		@PostMapping("/addBook")
+		@PreAuthorize("hasRole('ROLE_ADMIN')")
+		public ResponseEntity<Map<String,String>> addBook (@Valid @RequestBody AddBookRequestDTO request ) {
+			bookService.addBook(request);
+			Map <String, String>  map = new HashMap<>();
+			map.put("message",	" Book added successfuly");
+			map.put("status", "true");
+			return new ResponseEntity<>(map,HttpStatus.CREATED);
+			
+		}
 		
 		
+		//*********  KITAP LISTELEME  **********
+	    @GetMapping("/listBooks")
+	    @PreAuthorize("hasRole('ROLE_ADMIN')or hasRole('ROLE_USER')")
+	    public ResponseEntity<List<Book>> getAllBooks() {
+	        List<Book> books=  bookService.getAllBooks();
+	        return ResponseEntity.ok(books);
+	    }
+	    
+		//********  KITAP SILME  ************
+	    @DeleteMapping("/deleteBook/{id}")
+		@PreAuthorize("hasRole('ROLE_ADMIN')")  ////sadece admin olan kişi silebilir
+	    public ResponseEntity<Map<String,String>> deleteBook(@PathVariable("id") Long id) {
+	        bookService.deleteBook(id);
+	        Map<String,String> map = new HashMap<>();
+	        map.put("message", "Book is deleted successfuly");
+	        map.put("status", "true");
+	        return new ResponseEntity<>(map,HttpStatus.OK);
+	     //TODO kullanicinin iade etmesi gereken kitap varsa silemesin   	
+	    }
 		
-		
-		
+	  //******** KITAP UPDATE  *************
+	  		@PutMapping("/updateBook/{id}")
+	  		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	  	    public ResponseEntity<Map<String, String>> updateBook( @PathVariable Long id, @RequestBody AddBookRequestDTO addBookRequestDTO){
+
+	  	        bookService.updateBook(id,addBookRequestDTO);
+	  	        Map<String,String> map = new HashMap<>();
+	  	        map.put("message", "Book is updated successfuly");
+	  	        map.put("status", "true");
+	  	        return new ResponseEntity<>(map,HttpStatus.OK);
+	  	    }
+	    
+	    
 }
 
 
