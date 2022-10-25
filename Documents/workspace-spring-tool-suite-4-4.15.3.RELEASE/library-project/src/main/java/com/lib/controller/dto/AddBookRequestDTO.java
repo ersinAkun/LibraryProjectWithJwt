@@ -27,7 +27,7 @@ public class AddBookRequestDTO {
 	private String category;
 
 	//kitap durumu 
-	private String status;
+	private Boolean status;
 	
 	//alinmaTarihi
 	//24.10.2022

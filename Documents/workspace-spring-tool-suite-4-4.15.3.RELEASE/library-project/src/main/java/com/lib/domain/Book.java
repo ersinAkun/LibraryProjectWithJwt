@@ -55,7 +55,7 @@ public class Book {
 
 	//kitap durumu 
 	@Column (name="status",length=10,nullable=false)
-	private String status;
+	private Boolean status;
 	
 	//alinmaTarihi
 	@Column (name="date",length=10,nullable=false)

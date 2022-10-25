@@ -1,5 +1,6 @@
 package com.lib.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lib.controller.dto.AddBookRequestDTO;
+import com.lib.controller.dto.LoginRequest;
 import com.lib.domain.Book;
 import com.lib.exception.ResourceNotFoundException;
 import com.lib.repository.BookRepository;
@@ -21,6 +23,11 @@ public class BookService {
 	
 	@Autowired
 	BookRepository bookRepository;
+	
+	
+	LoginRequest loginRequest = new LoginRequest();
+	
+	
 	
 	
 	public void addBook(@Valid AddBookRequestDTO request) {
@@ -71,16 +78,27 @@ public class BookService {
         else {
             throw new ResourceNotFoundException("Could not found id: "+id);
         }
-	
-	
-        
-        
+	    
 	}
 
 
 	private Book findBook(Long id ) {
 		return bookRepository.findById(id).
 				orElseThrow(()->new ResourceNotFoundException("Book not found with id : "+id));
+	}
+
+
+	public void getBook(Long id) {
+		String loginMail = loginRequest.getUserMail();
+		
+		Book book = findBook(id);
+		boolean exist = bookRepository.existsById(id);
+		if(exist) {
+			book.setOwner(loginMail);
+			book.setStatus(false);
+			book.setDate(LocalDate.now().toString());
+			bookRepository.save(book);
+		}
 	}
 	
 	

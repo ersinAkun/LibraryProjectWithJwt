@@ -160,7 +160,18 @@ public class UserJWTController {
 	  	        return new ResponseEntity<>(map,HttpStatus.OK);
 	  	    }
 	    
-	    
+	    //******  Kullanici Kitap Alacak  **********
+	  		@GetMapping("/getBook/{id}")
+	  	    @PreAuthorize("hasRole('ROLE_USER')")
+	  	     public ResponseEntity<Map<String,String>> getBook(@PathVariable("id") Long id) {
+	  	        bookService.getBook(id);
+	  	        Map<String,String> map = new HashMap<>();
+	  	        map.put("message", "Book is taken successfuly");
+	  	        map.put("status", "true");
+	  	        return new ResponseEntity<>(map,HttpStatus.OK);
+	  	    }	
+	  		
+	  		
 }
 
 
