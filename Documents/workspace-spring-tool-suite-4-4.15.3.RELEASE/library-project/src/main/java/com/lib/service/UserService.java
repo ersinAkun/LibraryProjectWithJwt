@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lib.controller.dto.AddBookRequestDTO;
+import com.lib.controller.dto.LoginRequest;
 import com.lib.controller.dto.RegisterRequest;
 import com.lib.controller.dto.UpdateRequestDTO;
 import com.lib.domain.Role;
@@ -63,6 +64,10 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public User findUserByMailUser(LoginRequest request) {
+        return userRepository.findByUserMail(request.getUserMail()).
+        orElseThrow(()-> new ResourceNotFoundException("User not found with mail : " + request.getUserMail()));
+    }	
 
 
 	public void deleteUser(Long id) {

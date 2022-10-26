@@ -3,6 +3,7 @@ package com.lib.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.lib.controller.dto.AddBookRequestDTO;
 import com.lib.controller.dto.LoginRequest;
 import com.lib.domain.Book;
+import com.lib.domain.User;
 import com.lib.exception.ResourceNotFoundException;
 import com.lib.repository.BookRepository;
 import com.lib.repository.UserRepository;
@@ -24,9 +26,11 @@ public class BookService {
 	@Autowired
 	BookRepository bookRepository;
 	
+	@Autowired
+	UserService userService;
 	
-	LoginRequest loginRequest = new LoginRequest();
 	
+	//LoginRequest loginRequest = new LoginRequest();  //dto dan bean olusur mu?
 	
 	
 	
@@ -87,19 +91,42 @@ public class BookService {
 				orElseThrow(()->new ResourceNotFoundException("Book not found with id : "+id));
 	}
 
-
-	public void getBook(Long id) {
-		String loginMail = loginRequest.getUserMail();
+  
+	
+	//*****  kulanici kitap alma methodu  *****
+	public void getBook(Long id, String mail) {
 		
 		Book book = findBook(id);
-		boolean exist = bookRepository.existsById(id);
-		if(exist) {
-			book.setOwner(loginMail);
+			book.setOwner(mail);
 			book.setStatus(false);
 			book.setDate(LocalDate.now().toString());
 			bookRepository.save(book);
-		}
+	
 	}
+
+	//*****  kulanici kitap iade methodu  *****
+	public void returnBook(Long id, String mail) {
+		
+		Book book = findBook(id);
+		book.setOwner("");
+		book.setStatus(true);
+		book.setDate("");
+		bookRepository.save(book);
+		
+	}
+
+
+	public List<Book> getMyBooks(String mail) {
+		
+		List<Book> myBooks = bookRepository.findAllByOwner(mail);
+		
+		return myBooks;
+	}
+
+
+	
+
+
 	
 	
 	

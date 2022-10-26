@@ -70,11 +70,11 @@ public class Book {
 	
 	
 	
-	/*
+	
 	@ManyToOne
 	@JoinColumn(name= "user_id")
 	private User user;
-	*/
+	
 	
 	
 }

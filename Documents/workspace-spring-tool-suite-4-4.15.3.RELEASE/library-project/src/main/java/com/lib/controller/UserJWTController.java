@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lib.controller.dto.AddBookRequestDTO;
+import com.lib.controller.dto.LoginRequest;
 import com.lib.controller.dto.RegisterRequest;
 import com.lib.controller.dto.UpdateRequestDTO;
 import com.lib.domain.Book;
@@ -32,10 +34,12 @@ import com.lib.service.BookService;
 import com.lib.service.UserService;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserJWTController {
 
 	@Autowired
@@ -52,7 +56,7 @@ public class UserJWTController {
 	
 	
 	
-	//********* REGISTER***************
+	//*********   REGISTER   *****************
 		@PostMapping("/register")
 		public ResponseEntity<Map<String,String>> registerUser (@Valid @RequestBody RegisterRequest request ) {
 			userService.registerUser(request);
@@ -161,18 +165,50 @@ public class UserJWTController {
 	  	    }
 	    
 	    //******  Kullanici Kitap Alacak  **********
-	  		@GetMapping("/getBook/{id}")
+	  		@PutMapping("/getBook/{id}")
 	  	    @PreAuthorize("hasRole('ROLE_USER')")
-	  	     public ResponseEntity<Map<String,String>> getBook(@PathVariable("id") Long id) {
-	  	        bookService.getBook(id);
+	  	    public ResponseEntity<Map<String,String>> getBook(@PathVariable("id") Long id,HttpServletRequest request) {
+	  	      
+	  			String mail = (String) request.getAttribute("mail");
+	  			bookService.getBook(id,mail);
 	  	        Map<String,String> map = new HashMap<>();
 	  	        map.put("message", "Book is taken successfuly");
 	  	        map.put("status", "true");
 	  	        return new ResponseEntity<>(map,HttpStatus.OK);
 	  	    }	
 	  		
+	  	//******  Kullanici Kitap Iade Edecek   *********	
+	  		
+	  		@PutMapping("/returnBook/{id}")
+	  	    @PreAuthorize("hasRole('ROLE_USER')")
+	  	    public ResponseEntity<Map<String,String>> returnBook(@PathVariable("id") Long id,HttpServletRequest request) {
+	  	      
+	  			String mail = (String) request.getAttribute("mail");
+	  			bookService.returnBook(id,mail);
+	  	        Map<String,String> map = new HashMap<>();
+	  	        map.put("message", "Book is returned successfuly");
+	  	        map.put("status", "true");
+	  	        return new ResponseEntity<>(map,HttpStatus.OK);
+	  	    }	
+	  		
+	  	//*****  Kullanici aldigi kitaplari Listelesin  *********
+	  		@GetMapping("/listMyBooks")
+	  		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	  		public ResponseEntity<List<Book>> getMyBooks(HttpServletRequest request) {
+	  			
+	  			String mail = (String) request.getAttribute("mail");
+		        List<Book> books=  bookService.getMyBooks(mail);
+		        return ResponseEntity.ok(books);
+	  		}
+		        
 	  		
 }
 
 
+	  		
+	  		
+	  		
+	  		
+	  		
+	  		
 

@@ -35,6 +35,10 @@ public class AuthTokenFilter extends OncePerRequestFilter{
             if(jwtToken!=null && jwtUtils.validateToken(jwtToken)) { // 2.parametrede token validation yapılıyor
                 String userName = jwtUtils.getUserNameFromJwtToken(jwtToken);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(userName); // user -validation
+                
+                request.setAttribute("mail", userDetails.getUsername());//bize mail getirsin diye ekledik
+                
+                
                 UsernamePasswordAuthenticationToken authentication = 
                         new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication); // login kullanıcı bilgilerini Contexte atıyorum
