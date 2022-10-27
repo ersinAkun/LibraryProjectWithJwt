@@ -92,14 +92,22 @@ public class BookService {
   
 	
 	//*****  kulanici kitap alma methodu  *****
+	
 	public void getBook(Long id, String mail) {
+		int count = 0;
+		for(Book w: bookRepository.findAllByOwner(mail)) {
+			count++;
+		}
 		
 		Book book = findBook(id);
+		if(book.getStatus()==true && count<3) {
 			book.setOwner(mail);
 			book.setStatus(false);
 			book.setDate(LocalDate.now().toString());
 			bookRepository.save(book);
-	
+		}else {
+			throw new ResourceNotFoundException("Could not found available book with that id : "+id);
+		}
 	}
 
 	//*****  kulanici kitap iade methodu  *****
@@ -120,13 +128,19 @@ public class BookService {
 		
 		return myBooks;
 	}
+	
+	
+	public List<Book> getAvailableBooks(Boolean status) {
 
+        return bookRepository.bringAvailableBooks(status);
+    }
 
+/*
 	public List<Book> getAvailableBooks(Boolean isAvailable) {
 		
 		return bookRepository.getAvailableBooks(isAvailable);
 	}
-
+*/
 
 	
 

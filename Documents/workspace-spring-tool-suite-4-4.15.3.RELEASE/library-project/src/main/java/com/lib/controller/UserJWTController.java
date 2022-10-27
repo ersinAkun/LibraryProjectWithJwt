@@ -175,6 +175,7 @@ public class UserJWTController {
 	  	        Map<String,String> map = new HashMap<>();
 	  	        map.put("message", "Book is taken successfuly");
 	  	        map.put("status", "true");
+	  	        
 	  	        return new ResponseEntity<>(map,HttpStatus.OK);
 	  	    }	
 	  		
@@ -202,7 +203,7 @@ public class UserJWTController {
 		        return ResponseEntity.ok(books);
 	  		}
 	  	//*****  Alınabilir Kitaplar Listelensin  *********       
-	  		@GetMapping("/availableBooks")
+	  /*		@GetMapping("/availableBooks")
 	  		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	  		
 	  		 public ResponseEntity<List<Book>> availableBooks(Boolean isAvailable) {
@@ -211,7 +212,17 @@ public class UserJWTController {
 		        List<Book> books=  bookService.getAvailableBooks(isAvailable);
 		        return ResponseEntity.ok(books);
 		    }
+	  	*/	
 	  		
+	  		// *************   BOOK STATUS  *********
+	  		@GetMapping("/bookStatus/{isAvailable}")
+	  	    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	  	     public ResponseEntity<List<Book>> availableBooks(@PathVariable("isAvailable")Boolean status) {
+	  	      List<Book> books=  bookService.getAvailableBooks(status);
+	  	      return ResponseEntity.ok(books);
+	  	  }
+	  		
+	 /*     yukaridaki methodda true false yapinca bu methoda gerek kalmiyor
 	  	//*****  Alınmis Kitaplar Listelensin  ********* 			
 	  		@GetMapping("/takenBooks")
 	  		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
@@ -222,9 +233,9 @@ public class UserJWTController {
 		        List<Book> books=  bookService.getAvailableBooks(isAvailable);
 		        return ResponseEntity.ok(books);
 		    }
+	  */		
 	  		
-	  		
-	  		
+	  // **********     		
 	  		
 	  		
 }

@@ -15,9 +15,13 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	List<Book> findAllByOwner(String mail);
 
 	
-	@Query(value="SELECT * FROM tbl_book b WHERE b.status=:pstatus", nativeQuery=true)
-    List<Book> getAvailableBooks(@Param ("pstatus")Boolean isAvailable );
+	
+	//@Query(value="SELECT * FROM tbl_book b WHERE b.status=:pstatus", nativeQuery=true)
+    //List<Book> getAvailableBooks(@Param ("pstatus")Boolean isAvailable );
 
+	@Query("SELECT b FROM Book b WHERE b.status=:isAvailable")
+
+    List<Book> bringAvailableBooks(@Param("isAvailable")Boolean status);
 	
 	 
 		
