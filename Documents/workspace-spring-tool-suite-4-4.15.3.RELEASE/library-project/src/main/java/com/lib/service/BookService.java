@@ -51,8 +51,6 @@ public class BookService {
 
 
 	public List<Book> getAllBooks() {
-		
-		
 		return bookRepository.findAll();
 	}
 
@@ -121,6 +119,12 @@ public class BookService {
 		List<Book> myBooks = bookRepository.findAllByOwner(mail);
 		
 		return myBooks;
+	}
+
+
+	public List<Book> getAvailableBooks(Boolean isAvailable) {
+		
+		return bookRepository.getAvailableBooks(isAvailable);
 	}
 
 

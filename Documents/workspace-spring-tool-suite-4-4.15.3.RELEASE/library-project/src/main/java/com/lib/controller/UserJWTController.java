@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lib.controller.dto.AddBookRequestDTO;
@@ -200,7 +201,31 @@ public class UserJWTController {
 		        List<Book> books=  bookService.getMyBooks(mail);
 		        return ResponseEntity.ok(books);
 	  		}
-		        
+	  	//*****  Alınabilir Kitaplar Listelensin  *********       
+	  		@GetMapping("/availableBooks")
+	  		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	  		
+	  		 public ResponseEntity<List<Book>> availableBooks(Boolean isAvailable) {
+	  			 
+	  			isAvailable = true;
+		        List<Book> books=  bookService.getAvailableBooks(isAvailable);
+		        return ResponseEntity.ok(books);
+		    }
+	  		
+	  	//*****  Alınmis Kitaplar Listelensin  ********* 			
+	  		@GetMapping("/takenBooks")
+	  		@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	  		
+	  		 public ResponseEntity<List<Book>> getNotAvailableBooks(Boolean isAvailable) {
+	  			 
+	  			isAvailable = false;
+		        List<Book> books=  bookService.getAvailableBooks(isAvailable);
+		        return ResponseEntity.ok(books);
+		    }
+	  		
+	  		
+	  		
+	  		
 	  		
 }
 
