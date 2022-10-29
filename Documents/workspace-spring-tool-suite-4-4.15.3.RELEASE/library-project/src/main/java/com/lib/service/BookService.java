@@ -3,16 +3,14 @@ package com.lib.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lib.controller.dto.AddBookRequestDTO;
-import com.lib.controller.dto.LoginRequest;
+import com.lib.controller.dto.ListBooksForUsersDTO;
 import com.lib.domain.Book;
-import com.lib.domain.User;
 import com.lib.exception.ResourceNotFoundException;
 import com.lib.repository.BookRepository;
 import com.lib.repository.UserRepository;
@@ -134,6 +132,19 @@ public class BookService {
 
         return bookRepository.bringAvailableBooks(status);
     }
+
+
+	public List<ListBooksForUsersDTO> getBookForUser() {
+		return bookRepository.findAllBook();
+		
+	//	List<ListBooksForUsersDTO> forUserBook = new ArrayList<>();
+	//	List<Object>returnList = bookRepository.BooksForUser();
+	//	for(Object w : returnList) {
+	//		forUserBook.add((ListBooksForUsersDTO) w);
+	//	}
+	}	
+		
+	
 
 /*
 	public List<Book> getAvailableBooks(Boolean isAvailable) {

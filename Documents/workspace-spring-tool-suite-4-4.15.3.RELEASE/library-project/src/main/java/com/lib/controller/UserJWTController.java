@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lib.controller.dto.AddBookRequestDTO;
+import com.lib.controller.dto.ListBooksForUsersDTO;
 import com.lib.controller.dto.LoginRequest;
 import com.lib.controller.dto.RegisterRequest;
 import com.lib.controller.dto.UpdateRequestDTO;
@@ -133,9 +134,9 @@ public class UserJWTController {
 		}
 		
 		
-		//*********  KITAP LISTELEME  **********
+		//*********  KITAP LISTELEME admın ıcın **********
 	    @GetMapping("/listBooks")
-	    @PreAuthorize("hasRole('ROLE_ADMIN')or hasRole('ROLE_USER')")
+	    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	    public ResponseEntity<List<Book>> getAllBooks() {
 	        List<Book> books=  bookService.getAllBooks();
 	        return ResponseEntity.ok(books);
@@ -238,13 +239,21 @@ public class UserJWTController {
 	  // **********     		
 	  		
 	  		
-}
+	  	//*********  KITAP LISTELEME user ıcın  **********
+		    @GetMapping("/listBooksForUsers")
+		    @PreAuthorize("hasRole('ROLE_USER')")
+		    public ResponseEntity<List<ListBooksForUsersDTO>> getAllBooksForUser() {
+		        List<ListBooksForUsersDTO> books=  bookService.getBookForUser();
+		        return ResponseEntity.ok(books);
+		    }
+	  		
 
 
+
 	  		
 	  		
 	  		
 	  		
 	  		
-	  		
+}	  		
 
