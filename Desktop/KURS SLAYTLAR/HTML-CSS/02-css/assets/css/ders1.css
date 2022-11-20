@@ -1,0 +1,12 @@
+.araBaslik{
+    color: rgb(114, 66, 235);
+    background-color: rgb(98, 86, 86) !important;
+}
+
+h3.digerBaslik{
+background-color: rgb(195, 202, 97);
+}
+
+p.digerBaslik{
+    background-color: lightgreen;
+}
