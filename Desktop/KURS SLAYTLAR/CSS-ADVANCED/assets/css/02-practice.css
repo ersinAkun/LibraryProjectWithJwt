@@ -1,0 +1,32 @@
+nav.menu{
+    font-family: "Poppins";
+    text-align: left;
+    background-color: rgb(122, 240, 240);
+    width: 300px;
+
+}
+
+nav.menu ul{
+    list-style-type: "☎️";
+    padding: 0;
+    list-style-position: inside;/* emojiyi arkaplan rengi icine aliyor*/
+    padding: 1rem;
+}
+nav.menu a{
+    text-decoration: none;
+    font-weight: 400;
+    color: black;
+    padding: 0 0.5rem;
+    
+}
+
+nav.menu a:visited{
+    color: black;
+}
+nav.menu a:hover{
+    background-color: rgb(56, 175, 175);
+    color: rgb(232,249,120);
+}
+nav.menu li{
+    padding: 0.3rem ;
+}
