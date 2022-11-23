@@ -1,0 +1,12 @@
+.inl{
+    display: inline;
+}
+
+.blc{
+    display: block;
+}
+.hello{
+    background-color: aquamarine;
+    padding: 3rem;
+    display: inline-block;
+}
