@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .menu li {
+        color: red;
+      }
+      .menu > ul > li {
+        color: blue;
+      }
+      .menu + article {
+        color: rgba(226, 72, 11, 0.866);
+      }
+      .menu ~ article {
+        background-color: aquamarine;
+      }
+      .menu article {
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="menu">
+      <ul>
+        <li>Ocak</li>
+        <li>Şubat</li>
+        <li>Mart</li>
+        <li>
+          Nisan
+          <ul>
+            <li>Pazartesi</li>
+            <li>Salı</li>
+            <li>Çarşamba</li>
+          </ul>
+        </li>
+        <li>Mayıs</li>
+        <li>Haziran</li>
+      </ul>
+    </nav>
+
+    <article>
+      XXX Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam tempora
+      ipsum amet quos nobis modi nemo excepturi quae ratione cupiditate? Hic quo
+      voluptas veniam eveniet rem odit et excepturi esse?
+    </article>
+    <article>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias incidunt
+      praesentium blanditiis sequi ratione? Veritatis, unde. Iste doloribus
+      possimus at, doloremque molestias, amet, libero debitis quidem voluptatum
+      vero enim minus?
+    </article>
+    <div>TEST2</div>
+    <article>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id voluptates
+      iste nulla, nesciunt illum molestiae alias numquam, velit, rerum
+      temporibus quas enim expedita unde. Rerum quis fuga eaque facilis quam?
+    </article>
+    <div>
+      <article>TEST3</article>
+    </div>
+  </body>
+</html>
